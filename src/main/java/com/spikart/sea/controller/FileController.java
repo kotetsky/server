@@ -11,28 +11,41 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 
+import static com.spikart.sea.config.Constants.UPLOAD_PATH;
+
 @RestController
 @RequestMapping("/api/file")
 public class FileController {
 
+
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadFile(@RequestParam("uploadedFile") MultipartFile multipartFile) {
         try {
             // Створюємо папку, якщо її ще немає
-            File uploadDir = new File("uploads");
+            File uploadDir = new File(UPLOAD_PATH); // /opt/tomcat/sea_backend/uploads
             if (!uploadDir.exists()) {
-                uploadDir.mkdir();
+                boolean isDirCreated = uploadDir.mkdir();
+                if (!isDirCreated) {
+                    return new ResponseEntity<>("Directory can not be created", HttpStatus.INTERNAL_SERVER_ERROR);
+                } else System.out.println("Directory created");
             }
 
             // Зберігаємо файл
-            String filePath = "uploads/" + file.getOriginalFilename();
-            file.transferTo(new File(filePath));
+            String uploadedFilePath = UPLOAD_PATH + "/" + multipartFile.getOriginalFilename(); //
+            File savedFile = new File(uploadedFilePath);
+            if (savedFile.exists()) {
+                if (false) multipartFile.transferTo(savedFile);
+                return new ResponseEntity<>("savedFile already exists", HttpStatus.INTERNAL_SERVER_ERROR);
+            } else  {
+                multipartFile.transferTo(savedFile);
+                System.out.println("File uploaded " + uploadedFilePath);
+            }
 
             // Повертаємо шлях до файлу
-            return new ResponseEntity<>("File uploaded: /uploads/" + file.getOriginalFilename(), HttpStatus.OK);
+            return new ResponseEntity<>("File uploaded: /" + uploadedFilePath, HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
-            return new ResponseEntity<>("Failed to upload file", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed to upload this file", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
