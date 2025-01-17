@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -27,8 +28,7 @@ public class AppConfig {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
-
-        WebMvcConfigurer configurer = new WebMvcConfigurer() {
+        return new WebMvcConfigurer() {
 
             @Override
             public void addCorsMappings(CorsRegistry registry) {
@@ -45,16 +45,16 @@ public class AppConfig {
                         .addResourceLocations("file:" + Constants.UPLOAD_PATH + "/");
             }
         };
-
-        return configurer;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/auth/signup", "/auth/signin").permitAll()
-                        .requestMatchers("/api/**").authenticated()
+                        //  .requestMatchers("/api/**").authenticated() // todo create authentication for certain requests
+                        .requestMatchers("/api/**").permitAll()
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(new JwtValidator(), UsernamePasswordAuthenticationFilter.class)
@@ -69,10 +69,10 @@ public class AppConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("*"));
+        configuration.setAllowedOrigins(allowedOrigins());
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
 
@@ -85,4 +85,13 @@ public class AppConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    private List<String> allowedOrigins() {
+        return Arrays.asList(
+                "http://localhost:8080",
+                "http://localhost:8081",
+                "http://192.168.33.*"
+        );
+    }
 }
+

@@ -21,7 +21,7 @@ public class FileController {
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("uploadedFile") MultipartFile multipartFile) {
         try {
-            // Створюємо папку, якщо її ще немає
+            // make folder if it not exists
             File uploadDir = new File(UPLOAD_PATH); // /opt/tomcat/sea_backend/uploads
             if (!uploadDir.exists()) {
                 boolean isDirCreated = uploadDir.mkdir();
@@ -30,7 +30,7 @@ public class FileController {
                 } else System.out.println("Directory created");
             }
 
-            // Зберігаємо файл
+            // saving the file
             String uploadedFilePath = UPLOAD_PATH + "/" + multipartFile.getOriginalFilename(); //
             File savedFile = new File(uploadedFilePath);
             if (savedFile.exists()) {
@@ -41,7 +41,7 @@ public class FileController {
                 System.out.println("File uploaded " + uploadedFilePath);
             }
 
-            // Повертаємо шлях до файлу
+            // return the path to the file
             return new ResponseEntity<>("File uploaded: /" + uploadedFilePath, HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
