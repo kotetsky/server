@@ -1,7 +1,7 @@
-package com.spikart.sea.controller;
+package com.spikart.back.controller;
 
-import com.spikart.sea.model.Product;
-import com.spikart.sea.service.ProductService;
+import com.spikart.back.model.Product;
+import com.spikart.back.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

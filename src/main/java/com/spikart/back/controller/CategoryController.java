@@ -1,7 +1,7 @@
-package com.spikart.sea.controller;
+package com.spikart.back.controller;
 
-import com.spikart.sea.model.Category;
-import com.spikart.sea.service.CategoryService;
+import com.spikart.back.model.Category;
+import com.spikart.back.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

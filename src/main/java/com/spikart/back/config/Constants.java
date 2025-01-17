@@ -1,4 +1,4 @@
-package com.spikart.sea.config;
+package com.spikart.back.config;
 
 public class Constants {
 

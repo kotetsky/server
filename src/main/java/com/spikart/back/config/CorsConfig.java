@@ -1,4 +1,4 @@
-package com.spikart.sea.config;
+package com.spikart.back.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

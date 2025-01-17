@@ -1,4 +1,4 @@
-package com.spikart.sea.model;
+package com.spikart.back.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

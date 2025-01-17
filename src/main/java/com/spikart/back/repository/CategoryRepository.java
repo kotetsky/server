@@ -1,6 +1,6 @@
-package com.spikart.sea.repository;
+package com.spikart.back.repository;
 
-import com.spikart.sea.model.Category;
+import com.spikart.back.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

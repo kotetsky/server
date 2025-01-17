@@ -1,7 +1,7 @@
-package com.spikart.sea.service;
+package com.spikart.back.service;
 
-import com.spikart.sea.model.Category;
-import com.spikart.sea.repository.CategoryRepository;
+import com.spikart.back.model.Category;
+import com.spikart.back.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

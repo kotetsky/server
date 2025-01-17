@@ -1,6 +1,6 @@
-package com.spikart.sea.repository;
+package com.spikart.back.repository;
 
-import com.spikart.sea.model.Product;
+import com.spikart.back.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,4 +1,4 @@
-package com.spikart.sea.controller;
+package com.spikart.back.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 
-import static com.spikart.sea.config.Constants.UPLOAD_PATH;
+import static com.spikart.back.config.Constants.UPLOAD_PATH;
 
 @RestController
 @RequestMapping("/api/file")

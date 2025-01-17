@@ -1,7 +1,7 @@
-package com.spikart.sea.service;
+package com.spikart.back.service;
 
-import com.spikart.sea.model.Product;
-import com.spikart.sea.repository.ProductRepository;
+import com.spikart.back.model.Product;
+import com.spikart.back.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
