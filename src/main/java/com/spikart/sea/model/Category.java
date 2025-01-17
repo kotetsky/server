@@ -24,8 +24,7 @@ public class Category {
             String name,
             String description,
             String imageUrl
-    )
-    {
+    ) {
             this.id = id;
             this.parentId = parentId;
             this.name = name;
