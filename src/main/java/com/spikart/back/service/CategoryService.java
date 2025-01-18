@@ -25,8 +25,13 @@ public class CategoryService {
         return optCategory.orElse(null);
     }
 
+
+    // not working yet maybe consider to remove
+    // I like to have parent_id for category but Zosh made it another way
+    /*
     public List<Category> getCategoriesByParentId(Long parentId) {
         List<Category> categories = categoryRepository.findAllByParentId(parentId);
         return categories;
     }
+    */
 }

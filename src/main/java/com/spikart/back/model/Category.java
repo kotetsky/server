@@ -1,74 +1,69 @@
 package com.spikart.back.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private long parentId;
+    private Long id;
+
+    @NotNull
+    @jakarta.validation.constraints.Size(max = 60)
     private String name;
-    private String description;
-    private String imageUrl;
 
-    public Category () {}
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "parent_category_id")
+    private Category parentCategory;
 
-    public Category(
-            long id,
-            long parentId,
-            String name,
-            String description,
-            String imageUrl
-    ) {
-            this.id = id;
-            this.parentId = parentId;
-            this.name = name;
-            this.description = description;
-            this.imageUrl = imageUrl;
+    private int level;
+
+    public Category() {
+
     }
 
-    public long getId() {
+    public Category(Long id, @NotNull @Size(max = 60) String name, Category parentCategory, int level) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.parentCategory = parentCategory;
+        this.level = level;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public long getParentId() {
-        return parentId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setParentId(long parentId) {
-        this.parentId = parentId;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public Category getParentCategory() {
+        return parentCategory;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setParentCategory(Category parentCategory) {
+        this.parentCategory = parentCategory;
     }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+
 }

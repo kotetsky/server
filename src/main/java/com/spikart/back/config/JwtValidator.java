@@ -51,5 +51,4 @@ public class JwtValidator extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
-
 }

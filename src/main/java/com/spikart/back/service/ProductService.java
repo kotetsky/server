@@ -1,47 +1,45 @@
 package com.spikart.back.service;
 
+import com.spikart.back.exception.ProductException;
 import com.spikart.back.model.Product;
+import com.spikart.back.model.Size;
 import com.spikart.back.repository.ProductRepository;
+import com.spikart.back.request.CreateProductRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class ProductService {
-    private ProductRepository productRepository;
+public interface ProductService {
 
-    ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    public List<Product> getAllProducts();
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
+    public Product getProductById(long id);
 
-    public Product getProductById(long id) {
-        Optional<Product> optionalProduct = productRepository.findById(id);
-        return optionalProduct.orElse(null);
-    }
+    public List<Product> getNewProducts();
 
-    public List<Product> getNewProducts() {
-        List<Product> products = productRepository.findTop12ByOrderByCreatedAtDesc();
-        return products;
-    }
+    public List<Product> getProductByViews();
 
-    public List<Product> getProductByViews() {
-        List<Product> products = productRepository.findTop12ByOrderByViewsDesc();
-        return products;
-    }
+    public Product createProduct(Product product);
 
-    public Product createProduct(Product product) {
-        product.setCreatedAt(LocalDateTime.now());
-        return productRepository.save(product);
-    }
+    public List<Product> findByNameContainingIgnoreCase (String searchTerm);
 
-    public List<Product> findByNameContainingIgnoreCase (String searchTerm) {
-        List<Product> productList = productRepository.findByNameContainingIgnoreCase(searchTerm);
-         return productList;
-    }
+    Product createProduct(CreateProductRequest request);
+
+    String deleteProduct(Long productId) throws ProductException;
+
+    Product updateProduct(Long productId, Product requestedProduct) throws ProductException;
+
+    Product findProductById(Long productId) throws ProductException;
+
+    List<Product> findProductByCategory(String category);
+
+    Page<Product> getAllProduct(
+            String category, List<String> colors,
+            List<Size> sizes, Integer minPrice, Integer maxPrice,
+            Integer minDiscount, String sort, String stock,
+            Integer pageNumber, Integer pageSize
+    );
 }
