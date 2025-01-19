@@ -109,7 +109,7 @@ public class ProductServiceImplementation implements ProductService {
         product.setBrand(request.getBrand());
         product.setPrice(request.getPrice());
         product.setSizes(request.getSize());
-        product.setQuantity(request.getQuatnity());
+        product.setQuantity(request.getQuantity());
         product.setCategory(thirdLevel);
         product.setCreatedAt(LocalDateTime.now());
 

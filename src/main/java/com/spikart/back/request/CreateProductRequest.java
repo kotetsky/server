@@ -11,9 +11,9 @@ public class CreateProductRequest {
     private String description;
     private int price;
     private int discountedPrice;
-
     private int discountPercent;
-    private int quatnity;
+    private int quantity;
+    private int warranty;
     private String brand;
     private String color;
     private Set<Size> size = new HashSet<>();
@@ -23,12 +23,49 @@ public class CreateProductRequest {
     private String thirdLevelCategory;
 
 
+    public CreateProductRequest() {
+
+    }
+
+    public CreateProductRequest(
+            String title,
+            String description,
+            int price,
+            int discountedPrice,
+            int discountPercent,
+            int quantity,
+            int warranty,
+            String brand,
+            String color,
+            Set<Size> size,
+            String imageUrl,
+            String topLevelCategory,
+            String secondLevelCategory,
+            String thirdLevelCategory
+    ) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.discountedPrice = discountedPrice;
+        this.discountPercent = discountPercent;
+        this.quantity = quantity;
+        this.warranty = warranty;
+        this.brand = brand;
+        this.color = color;
+        this.size = size;
+        this.imageUrl = imageUrl;
+        this.topLevelCategory = topLevelCategory;
+        this.secondLevelCategory = secondLevelCategory;
+        this.thirdLevelCategory = thirdLevelCategory;
+    }
+
+
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String name) {
+        this.title = name;
     }
 
     public String getDescription() {
@@ -63,12 +100,12 @@ public class CreateProductRequest {
         this.discountPercent = discountPercent;
     }
 
-    public int getQuatnity() {
-        return quatnity;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setQuatnity(int quatnity) {
-        this.quatnity = quatnity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public String getBrand() {
@@ -127,38 +164,11 @@ public class CreateProductRequest {
         this.thirdLevelCategory = thirdLevelCategory;
     }
 
-    public CreateProductRequest(){
-
+    public int getWarranty() {
+        return warranty;
     }
 
-    public CreateProductRequest(
-            String title,
-            String description,
-            int price,
-            int discountedPrice,
-            int discountPercent,
-            int quatnity,
-            String brand,
-            String color,
-            Set<Size> size,
-            String imageUrl,
-            String topLevelCategory,
-            String secondLevelCategory,
-            String thirdLevelCategory
-    ) {
-        this.title = title;
-        this.description = description;
-        this.price = price;
-        this.discountedPrice = discountedPrice;
-        this.discountPercent = discountPercent;
-        this.quatnity = quatnity;
-        this.brand = brand;
-        this.color = color;
-        this.size = size;
-        this.imageUrl = imageUrl;
-        this.topLevelCategory = topLevelCategory;
-        this.secondLevelCategory = secondLevelCategory;
-        this.thirdLevelCategory = thirdLevelCategory;
+    public void setWarranty(int warranty) {
+        this.warranty = warranty;
     }
-
 }

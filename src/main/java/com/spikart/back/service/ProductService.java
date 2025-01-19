@@ -2,15 +2,10 @@ package com.spikart.back.service;
 
 import com.spikart.back.exception.ProductException;
 import com.spikart.back.model.Product;
-import com.spikart.back.model.Size;
-import com.spikart.back.repository.ProductRepository;
 import com.spikart.back.request.CreateProductRequest;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductService {
 
@@ -24,7 +19,7 @@ public interface ProductService {
 
     public Product createProduct(Product product);
 
-    public List<Product> findByNameContainingIgnoreCase (String searchTerm);
+    public List<Product> findByNameContainingIgnoreCase(String searchTerm);
 
     Product createProduct(CreateProductRequest request);
 

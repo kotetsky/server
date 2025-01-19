@@ -1,62 +1,54 @@
 package com.spikart.back.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-
 @Entity
-@Table (name = "Product")
+@Table(name = "Product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="title")
+    @Column(name = "title")
     private String title;
 
-    @Column(name="description")
+    @Column(name = "description")
     private String description;
 
-    @Column(name="price")
+    @Column(name = "price")
     private int price;
 
-    @Column(name="discounted_price")
+    @Column(name = "discounted_price")
     private int discountedPrice;
 
-    @Column(name="discount_present")
+    @Column(name = "discount_present")
     private int discountPresent;
 
-    @Column(name="quantity")
+    @Column(name = "quantity")
     private int quantity;
 
-    @Column(name="brand")
+    @Column(name = "warranty")
+    private int warranty;
+
+    @Column(name = "brand")
     private String brand;
 
     @Column(name = "image_url")
     private String imageUrl;
 
-    @Column(name="color")
+    @Column(name = "color")
     private String color;
 
     @Embedded
     @ElementCollection
-    @Column(name="sizes")
+    @Column(name = "sizes")
     private Set<Size> sizes = new HashSet<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -75,6 +67,7 @@ public class Product {
     private LocalDateTime createdAt;
 
     private int views;
+
 
     public Product() {
 
@@ -136,6 +129,14 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public int getWarranty() {
+        return warranty;
+    }
+
+    public void setWarranty(int warranty) {
+        this.warranty = warranty;
+    }
+
     public String getBrand() {
         return brand;
     }
@@ -144,7 +145,7 @@ public class Product {
         this.brand = brand;
     }
 
-    public String getImageUrl () {
+    public String getImageUrl() {
         return imageUrl;
     }
 
@@ -216,9 +217,11 @@ public class Product {
         this.views = views;
     }
 
-    public Product(Long id, String title, String description, int price, int discountedPrice,
-                   int discountPresent, int quantity, String brand, String imageUrl, String color, Set<Size> sizes,
-                   List<Rating> ratings, int numRatings, List<Review> reviews, Category category, LocalDateTime createdAt, int views) {
+    public Product(
+            Long id, String title, String description, int price, int discountedPrice,
+            int discountPresent, int quantity, int warranty, String brand, String imageUrl, String color, Set<Size> sizes,
+            List<Rating> ratings, int numRatings, List<Review> reviews, Category category, LocalDateTime createdAt, int views
+    ) {
         super();
         this.id = id;
         this.title = title;
@@ -227,6 +230,7 @@ public class Product {
         this.discountedPrice = discountedPrice;
         this.discountPresent = discountPresent;
         this.quantity = quantity;
+        this.warranty = warranty;
         this.brand = brand;
         this.imageUrl = imageUrl;
         this.color = color;
@@ -238,10 +242,6 @@ public class Product {
         this.createdAt = createdAt;
         this.views = views;
     }
-
-
-
-
 
 
 }
