@@ -1,5 +1,6 @@
 package com.spikart.back.controller;
 
+import com.spikart.back.service.CartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -27,13 +28,20 @@ public class AuthController {
 
     private UserRepository userRepository;
     private JwtProvider jwtProvider;
+    private CartService cartService;
     private PasswordEncoder passwordEncoder;
     private CustomUserServiceImplementation customUserServiceImplementation;
 
-    public AuthController(UserRepository userRepository, JwtProvider jwtProvider, PasswordEncoder passwordEncoder,
-                          CustomUserServiceImplementation customUserServiceImplementation) {
+    public AuthController(
+            UserRepository userRepository,
+            JwtProvider jwtProvider,
+            CartService cartService,
+            PasswordEncoder passwordEncoder,
+            CustomUserServiceImplementation customUserServiceImplementation
+    ) {
         this.userRepository = userRepository;
         this.jwtProvider = jwtProvider;
+        this.cartService = cartService;
         this.passwordEncoder = passwordEncoder;
         this.customUserServiceImplementation = customUserServiceImplementation;
     }
@@ -60,6 +68,7 @@ public class AuthController {
         createUser.setLastName(lastName);
 
         userRepository.save(createUser);
+        cartService.createCart(createUser);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(email, createUser.getPassword());
         String token = jwtProvider.generateToken(authentication);

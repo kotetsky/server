@@ -39,7 +39,7 @@ public class CartServiceImplementation implements CartService {
     @Override
     public String addCartItem(Long userId, AddCartItemRequest request) throws ProductException {
 
-        Cart cart = new Cart();
+        Cart cart = cartRepository.findCartByUserId(userId);
         Product product = productService.findProductById(request.getProductId());
         CartItem isPresent = cartItemService.isCartItemExists(cart, product, request.getSize(), userId);
         if (isPresent == null) {
@@ -56,15 +56,15 @@ public class CartServiceImplementation implements CartService {
             CartItem createdCartItem = cartItemService.createCartItem(item);
             cart.getCartItems().add(createdCartItem);
         } else {
-
+            return "item is already in the cart";
         }
         return "item is successfully added to cart";
     }
 
     @Override
     public Cart findUserCart(Long userId) {
-        Cart cart = new Cart();
-
+        Cart cart = cartRepository.findCartByUserId(userId);
+        System.out.println("AEROL cart = " + cart.getId());
         int totalPrice = 0;
         int totalDiscountedPrice = 0;
         int totalItem = 0;

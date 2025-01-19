@@ -151,10 +151,14 @@ public class ProductServiceImplementation implements ProductService {
     }
 
     @Override
-    public Page<Product> getAllProduct(String category, List<String> colors, List<String> sizes, Integer minPrice, Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    public Page<Product> getAllProduct(
+            String category, List<String> colors, List<String> sizes,
+            Integer minPrice, Integer maxPrice, Integer minDiscount, String sort,
+            String stock, Integer pageNumber, Integer pageSize
+    ) {;
+        Pageable pageable = PageRequest.of(pageNumber == null ? 0 : pageNumber, pageSize == null ? 10 : pageSize);
         List<Product> products = productRepository.filterProducts(category, minPrice, maxPrice, minDiscount, sort);
-        if (!colors.isEmpty()) {
+        if (colors != null && !colors.isEmpty()) {
             products = products.stream().filter(p ->
                     colors.stream().anyMatch(c ->
                             c.equalsIgnoreCase(p.getColor())

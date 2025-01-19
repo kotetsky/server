@@ -22,7 +22,7 @@ public class AdminProductController {
     @PostMapping("/create-product")
     public ResponseEntity<Product> createProduct(
             @RequestBody CreateProductRequest request
-    ){
+    ) {
         Product product = productService.createProduct(request);
         return new ResponseEntity<Product>(product, HttpStatus.CREATED);
     }
@@ -54,7 +54,7 @@ public class AdminProductController {
 
     @PostMapping("/creates")
     public ResponseEntity<ApiResponse> createMultipleProducts(
-        @RequestBody CreateProductRequest[] requestProducts
+            @RequestBody CreateProductRequest[] requestProducts
     ) {
         for (CreateProductRequest product : requestProducts) {
             productService.createProduct(product);

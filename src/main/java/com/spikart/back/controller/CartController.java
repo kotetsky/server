@@ -30,6 +30,7 @@ public class CartController {
         @RequestHeader(Const.AUTHORIZATION) String jwt
     ) throws UserException {
         User user = userService.findUserProfileByJwt(jwt);
+        System.out.println("AEROL user id = " + user.getId());
         Cart cart = cartService.findUserCart(user.getId());
         return new ResponseEntity<Cart>(cart,HttpStatus.OK);
     }
