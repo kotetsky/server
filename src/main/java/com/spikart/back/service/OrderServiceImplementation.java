@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImplementation implements OrderService {
@@ -44,6 +45,7 @@ public class OrderServiceImplementation implements OrderService {
         Address address = addressRepository.save(shippingAddress);
         user.getAddress().add(address);
         userRepository.save(user);
+
         Cart cart = cartService.findUserCart(user.getId());
         List<OrderItem> orderItems = new ArrayList<>();
         for (CartItem cartItem : cart.getCartItems()) {
@@ -63,7 +65,7 @@ public class OrderServiceImplementation implements OrderService {
         createdOrder.setUser(user);
         createdOrder.setOrderItems(orderItems);
         createdOrder.setTotalPrice(cart.getTotalPrice());
-        createdOrder.setTotalDiscounterdrice(cart.getTotalDiscountPrice());
+        createdOrder.setTotalDiscountedPrice(cart.getTotalDiscountPrice());
         createdOrder.setDiscount(cart.getDiscount());
         createdOrder.setTotalItem(cart.getTotalItem());
         createdOrder.setShippingAddress(address);
@@ -82,16 +84,6 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
-    public Order findOrderById(Long orderId) throws OrderException {
-        return null;
-    }
-
-    @Override
-    public List<Order> usersOrderHistory(Long userId) {
-        return null;
-    }
-
-    @Override
     public Order placedOrder(Long orderId) throws OrderException {
         Order order = findOrderById(orderId);
         order.setOrderStatus("PLACED");
@@ -107,27 +99,47 @@ public class OrderServiceImplementation implements OrderService {
     }
 
     @Override
+    public Order deliveredOrder(Long orderId) throws OrderException {
+        Order order = findOrderById(orderId);
+        order.setOrderStatus("DELIVERED");
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public Order canceledOrder(Long orderId) throws OrderException {
+        Order order = findOrderById(orderId);
+        order.setOrderStatus("CANCELED");
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public Order findOrderById(Long orderId) throws OrderException {
+        Optional<Order> opt = orderRepository.findById(orderId);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        throw new OrderException("order not exist with id = " + orderId);
+    }
+
+    @Override
+    public List<Order> usersOrderHistory(Long userId) {
+        List<Order> orders = orderRepository.getUsersOrders(userId);
+        return orders;
+    }
+
+    @Override
     public Order shippedOrder(Long orderId) throws OrderException {
         return null;
     }
 
     @Override
-    public Order deliveredOrder(Long orderId) throws OrderException {
-        return null;
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
     }
 
     @Override
-    public Order canceledOrder(Long orderId) throws OrderException {
-        return null;
-    }
-
-    @Override
-    public Order getAllOrders() {
-        return null;
-    }
-
-    @Override
-    public Order deleteOrder(Long orderId) throws OrderException {
-        return null;
+    public void deleteOrder(Long orderId) throws OrderException {
+        Order order = findOrderById(orderId);
+        orderRepository.delete(order);
     }
 }

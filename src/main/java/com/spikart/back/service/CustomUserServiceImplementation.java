@@ -26,7 +26,7 @@ public class CustomUserServiceImplementation implements UserDetailsService {
 		
 		User user = userRepository.findByEmail(username);
 		if(user == null) {
-			throw new UsernameNotFoundException("username is not found" + username);
+			throw new UsernameNotFoundException("username is not found : " + username);
 		}
 		
 		List<GrantedAuthority> authorities = new ArrayList<>();

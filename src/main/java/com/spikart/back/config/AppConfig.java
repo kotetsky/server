@@ -1,5 +1,7 @@
 package com.spikart.back.config;
 
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -92,6 +94,16 @@ public class AppConfig {
                 "http://localhost:8081",
                 "http://192.168.33.*"
         );
+    }
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("My API")
+                        .version("1.0")
+                        .description("API documentation for my application")
+                );
     }
 }
 

@@ -24,6 +24,7 @@ dependencies {
 	runtimeOnly("org.mariadb.jdbc:mariadb-java-client:3.1.4")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	implementation("org.springframework.boot:spring-boot-starter")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
 	// test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

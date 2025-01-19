@@ -38,7 +38,7 @@ public interface ProductService {
 
     Page<Product> getAllProduct(
             String category, List<String> colors,
-            List<Size> sizes, Integer minPrice, Integer maxPrice,
+            List<String> sizes, Integer minPrice, Integer maxPrice,
             Integer minDiscount, String sort, String stock,
             Integer pageNumber, Integer pageSize
     );

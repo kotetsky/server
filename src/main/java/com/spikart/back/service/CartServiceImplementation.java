@@ -38,7 +38,6 @@ public class CartServiceImplementation implements CartService {
 
     @Override
     public String addCartItem(Long userId, AddCartItemRequest request) throws ProductException {
-        // Cart cart = cartRepository.findByUserId(userId);
 
         Cart cart = new Cart();
         Product product = productService.findProductById(request.getProductId());
@@ -64,7 +63,6 @@ public class CartServiceImplementation implements CartService {
 
     @Override
     public Cart findUserCart(Long userId) {
-        // Cart cart = cartRepository.findByUserId(userId);
         Cart cart = new Cart();
 
         int totalPrice = 0;
@@ -81,6 +79,5 @@ public class CartServiceImplementation implements CartService {
         cart.setDiscount(totalPrice - totalDiscountedPrice);
         cart.setTotalItem(totalItem);
         return cartRepository.save(cart);
-
     }
 }

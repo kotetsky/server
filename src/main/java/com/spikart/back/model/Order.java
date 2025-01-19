@@ -65,7 +65,6 @@ public class Order {
         this.createdAt = createdAt;
     }
 
-
     public Long getId() {
         return id;
     }
@@ -142,7 +141,7 @@ public class Order {
         return totalDiscountedPrice;
     }
 
-    public void setTotalDiscounterdrice(Integer totalDiscountedPrice) {
+    public void setTotalDiscountedPrice(Integer totalDiscountedPrice) {
         this.totalDiscountedPrice = totalDiscountedPrice;
     }
 

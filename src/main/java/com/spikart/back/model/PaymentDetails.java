@@ -3,16 +3,34 @@ package com.spikart.back.model;
 public class PaymentDetails {
 
     private String paymentMethod;
-
-    private String  status;
-
+    private String status;
     private String paymentId;
-
     private String razorPayPaymentLinkId;
-
     private String razorPayPaymentLinkReferenceId;
-
+    private String razorPayPaymentLinkStatus;
     private String getRazorPayPaymentId;
+
+    public PaymentDetails() {
+
+    }
+
+    public PaymentDetails(
+            String paymentMethod,
+            String status,
+            String paymentId,
+            String razorPayPaymentLinkId,
+            String razorPayPaymentLinkReferenceId,
+            String razorPayPaymentLinkStatus,
+            String getRazorPayPaymentId
+    ) {
+        this.paymentMethod = paymentMethod;
+        this.status = status;
+        this.paymentId = paymentId;
+        this.razorPayPaymentLinkId = razorPayPaymentLinkId;
+        this.razorPayPaymentLinkReferenceId = razorPayPaymentLinkReferenceId;
+        this.razorPayPaymentLinkStatus = razorPayPaymentLinkStatus;
+        this.getRazorPayPaymentId = getRazorPayPaymentId;
+    }
 
     public String getPaymentMethod() {
         return paymentMethod;
@@ -60,5 +78,13 @@ public class PaymentDetails {
 
     public void setGetRazorPayPaymentId(String getRazorPayPaymentId) {
         this.getRazorPayPaymentId = getRazorPayPaymentId;
+    }
+
+    public String getRazorPayPaymentLinkStatus() {
+        return razorPayPaymentLinkStatus;
+    }
+
+    public void setRazorPayPaymentLinkStatus(String razorPayPaymentLinkStatus) {
+        this.razorPayPaymentLinkStatus = razorPayPaymentLinkStatus;
     }
 }

@@ -3,7 +3,6 @@ package com.spikart.back.service;
 import com.spikart.back.exception.ProductException;
 import com.spikart.back.model.Category;
 import com.spikart.back.model.Product;
-import com.spikart.back.model.Size;
 import com.spikart.back.repository.CategoryRepository;
 import com.spikart.back.repository.ProductRepository;
 import com.spikart.back.request.CreateProductRequest;
@@ -65,7 +64,7 @@ public class ProductServiceImplementation implements ProductService {
     }
 
     @Override
-    public List<Product> findByNameContainingIgnoreCase (String searchTerm) {
+    public List<Product> findByNameContainingIgnoreCase(String searchTerm) {
         List<Product> productList = productRepository.findByNameContainingIgnoreCase(searchTerm);
         return productList;
     }
@@ -134,7 +133,7 @@ public class ProductServiceImplementation implements ProductService {
             product.setQuantity(requestedProduct.getQuantity());
         }
 
-        return  productRepository.save(product);
+        return productRepository.save(product);
     }
 
     @Override
@@ -152,8 +151,8 @@ public class ProductServiceImplementation implements ProductService {
     }
 
     @Override
-    public Page<Product> getAllProduct(String category, List<String> colors, List<Size> sizes, Integer minPrice, Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize) {
-       Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    public Page<Product> getAllProduct(String category, List<String> colors, List<String> sizes, Integer minPrice, Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
         List<Product> products = productRepository.filterProducts(category, minPrice, maxPrice, minDiscount, sort);
         if (!colors.isEmpty()) {
             products = products.stream().filter(p ->
@@ -164,8 +163,8 @@ public class ProductServiceImplementation implements ProductService {
         }
         if (stock != null) {
             if (stock.equals("in_stock")) {
-                products = products.stream().filter( p -> p.getQuantity() > 0).collect(Collectors.toList());
-            } else if(stock.equals("out_of_stock")) {
+                products = products.stream().filter(p -> p.getQuantity() > 0).collect(Collectors.toList());
+            } else if (stock.equals("out_of_stock")) {
                 products = products.stream().filter(p -> p.getQuantity() < 1).collect(Collectors.toList());
             }
         }
@@ -173,6 +172,6 @@ public class ProductServiceImplementation implements ProductService {
         int endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());
         List<Product> pageContent = products.subList(startIndex, endIndex);
 
-        return  new PageImpl<>(pageContent, pageable, products.size());
+        return new PageImpl<>(pageContent, pageable, products.size());
     }
 }

@@ -1,7 +1,10 @@
 package com.spikart.back.controller;
 
+import com.spikart.back.exception.ProductException;
 import com.spikart.back.model.Product;
 import com.spikart.back.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,16 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api")
 public class ProductController {
 
-    private final ProductService productService;
+    @Autowired
+    private ProductService productService;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
-
-    @GetMapping
+    @GetMapping("/all-products")
     public List<Product> getProducts() {
         return productService.getAllProducts();
     }
@@ -43,7 +43,7 @@ public class ProductController {
         return responseEntity;
     }
 
-    @PostMapping
+    @PostMapping("/create-product")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         Product createdProduct = productService.createProduct(product);
         ResponseEntity<Product> responseEntity = new ResponseEntity<>(
@@ -57,4 +57,47 @@ public class ProductController {
     public List<Product> searchProducts(@RequestParam("q") String query) {
         return productService.findByNameContainingIgnoreCase(query);
     }
+
+
+    // from Zosh ! end of 5 th video
+
+    @GetMapping("/products")
+    public ResponseEntity<Page<Product>> findProductByCategoryHandler(
+            @RequestParam String category,
+            @RequestParam List<String> color,
+            @RequestParam List<String> size,
+            @RequestParam Integer minPrice,
+            @RequestParam Integer maxPrice,
+            @RequestParam Integer minDiscount,
+            @RequestParam String sort,
+            @RequestParam String stock,
+            @RequestParam Integer pageNumber,
+            @RequestParam Integer pageSize
+    ) {
+        Page<Product> res = productService.getAllProduct(category, color, size,
+                minPrice, maxPrice, minDiscount, sort, stock, pageNumber, pageSize
+        );
+        return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/products/id/{productId}")
+    public ResponseEntity<Product> findProductByIdHandler(
+            @PathVariable Long productId
+    ) throws ProductException {
+        Product product = productService.findProductById(productId);
+        return new ResponseEntity<Product>(product, HttpStatus.ACCEPTED);
+    }
+
+
+    // removed by Zosh because we will implement it later
+
+    /*
+    @GetMapping("/products/search")
+    public ResponseEntity<List<Product>> searchProductHandler(
+            @RequestParam String q
+    ) {
+        List<Product> products = productService.searchProduct(q);
+        return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+    }
+    */
 }
